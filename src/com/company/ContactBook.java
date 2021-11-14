@@ -17,6 +17,11 @@ public class ContactBook {
         System.out.println("A record was created!");
     }
 
+    public void removeContact(int choice) {
+        this.contacts.remove(choice - 1);
+        System.out.println("The record removed!");
+    }
+
     public List<Contact> getContacts() {
         return this.contacts;
     }
