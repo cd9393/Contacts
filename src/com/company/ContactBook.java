@@ -11,12 +11,6 @@ public class ContactBook {
         this.contacts = new ArrayList<>();
     }
 
-    public void addContact(String name, String surname,String number) {
-        Contact contact = new Contact(name, surname, number);
-        this.contacts.add(contact);
-        System.out.println("A record was created!");
-    }
-
     public void addContact(Contact contact) {
         this.contacts.add(contact);
     }

@@ -19,26 +19,13 @@ public class Menu {
             System.out.println("Enter action (add, remove, edit, count, list, exit):");
             String choice = this.scanner.nextLine();
             switch (choice) {
-                case "add":
-                    addContact();
-                    break;
-                case "remove":
-                    removeContact();
-                    break;
-                case "edit":
-                    editContact();
-                    break;
-                case "count":
-                    displayContactCount();
-                    break;
-                case "list":
-                    displayContacts();
-                    break;
-                case "exit":
-                    isRunning = false;
-                    break;
-                default :
-                    System.out.println("make a valid selection");
+                case "add" -> addContact();
+                case "remove" -> removeContact();
+                case "edit" -> editContact();
+                case "count" -> displayContactCount();
+                case "list" -> displayContacts();
+                case "exit" -> isRunning = false;
+                default -> System.out.println("make a valid selection");
             }
         }
     }
@@ -96,27 +83,25 @@ public class Menu {
             System.out.println("Select a field (name, surname, number):");
             String fieldName = scanner.nextLine();
             switch (fieldName) {
-                case "name":
+                case "name" -> {
                     System.out.println("Enter name:");
                     String name = scanner.nextLine();
                     contact.setName(name);
                     System.out.println("The record updated!");
-                    break;
-                case "surname":
+                }
+                case "surname" -> {
                     System.out.println("Enter surname");
                     String surname = scanner.nextLine();
                     contact.setSurname(surname);
                     System.out.println("The record updated!");
-                    break;
-                case "number":
+                }
+                case "number" -> {
                     System.out.println("Enter Number");
                     String number = scanner.nextLine();
                     contact.setPhoneNumber(number);
                     System.out.println("The record updated!");
-                    break;
-                default:
-                    System.out.println("Make a valid selection");
-                    break;
+                }
+                default -> System.out.println("Make a valid selection");
             }
         }
     }
