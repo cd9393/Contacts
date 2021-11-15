@@ -14,28 +14,32 @@ public class Menu {
     }
 
     public void displayMenu() {
-        System.out.println("Enter action (add, remove, edit, count, list, exit):");
-        String choice = this.scanner.nextLine();
-        switch (choice) {
-            case "add":
-                addContact();
-                break;
-            case "remove":
-                removeContact();
-                break;
-            case "edit":
-                editContact();
-                break;
-            case "count":
-                displayContactCount();
-                break;
-            case "list":
-                displayContacts();
-                break;
-            case "exit":
-                break;
-            default :
-                System.out.println("make a valid selection");
+        boolean isRunning = true;
+        while(isRunning) {
+            System.out.println("Enter action (add, remove, edit, count, list, exit):");
+            String choice = this.scanner.nextLine();
+            switch (choice) {
+                case "add":
+                    addContact();
+                    break;
+                case "remove":
+                    removeContact();
+                    break;
+                case "edit":
+                    editContact();
+                    break;
+                case "count":
+                    displayContactCount();
+                    break;
+                case "list":
+                    displayContacts();
+                    break;
+                case "exit":
+                    isRunning = false;
+                    break;
+                default :
+                    System.out.println("make a valid selection");
+            }
         }
     }
 
@@ -47,7 +51,7 @@ public class Menu {
             for (int i = 0; i < contacts.size(); i++) {
                 Contact contact = contacts.get(i);
                 String contactNumber = contact.hasNumber() ? contact.getPhoneNumber() : "[no number]";
-                System.out.println(i+1 + ". " + contact.getName() + " " + contact.getSurname() + " " + contactNumber);
+                System.out.println(i+1 + ". " + contact.getName() + " " + contact.getSurname() + ", " + contactNumber);
             }
         }
     }
@@ -58,10 +62,14 @@ public class Menu {
     }
 
     public void removeContact() {
-        displayContacts();
-        System.out.println("Select a record:");
-        int choice = Integer.parseInt(scanner.nextLine());
-        contactBook.removeContact(choice);
+        if (contactBook.getContacts().isEmpty()) {
+            displayContacts();
+        } else {
+            displayContacts();
+            System.out.println("Select a record:");
+            int choice = Integer.parseInt(scanner.nextLine());
+            contactBook.removeContact(choice);
+        }
     }
 
     public void addContact() {
@@ -73,19 +81,45 @@ public class Menu {
         String number = scanner.nextLine();
         Contact contact = new Contact(name, surname);
         contact.setPhoneNumber(number);
+        contactBook.addContact(contact);
         System.out.println("The record added.");
     }
 
-//    public void editContact() {
-//        if (contactBook.getContacts().isEmpty()) {
-//            System.out.println("No records to remove!");
-//        } else {
-//            displayContacts();
-//            System.out.println("Select a record:");
-//            int choice = Integer.parseInt(scanner.nextLine());
-//
-//        }
-//    }
+    public void editContact() {
+        if (contactBook.getContacts().isEmpty()) {
+            System.out.println("No records to remove!");
+        } else {
+            displayContacts();
+            System.out.println("Select a record:");
+            int choice = Integer.parseInt(scanner.nextLine());
+            Contact contact = contactBook.getContacts().get(choice - 1);
+            System.out.println("Select a field (name, surname, number):");
+            String fieldName = scanner.nextLine();
+            switch (fieldName) {
+                case "name":
+                    System.out.println("Enter name:");
+                    String name = scanner.nextLine();
+                    contact.setName(name);
+                    System.out.println("The record updated!");
+                    break;
+                case "surname":
+                    System.out.println("Enter surname");
+                    String surname = scanner.nextLine();
+                    contact.setSurname(surname);
+                    System.out.println("The record updated!");
+                    break;
+                case "number":
+                    System.out.println("Enter Number");
+                    String number = scanner.nextLine();
+                    contact.setPhoneNumber(number);
+                    System.out.println("The record updated!");
+                    break;
+                default:
+                    System.out.println("Make a valid selection");
+                    break;
+            }
+        }
+    }
 
 
 }

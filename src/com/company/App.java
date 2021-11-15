@@ -14,18 +14,10 @@ public class App {
     }
 
     public void run() {
-        createContact(scanner);
-        System.out.println("A Phone Book with a single record created!");
+        Menu menu = new Menu();
+        menu.displayMenu();
+
     }
 
-    private void createContact(Scanner scanner) {
-        System.out.println("Enter the name of the person:");
-        String name = scanner.nextLine();
-        System.out.println("Enter the surname of the person:");
-        String surname = scanner.nextLine();
-        System.out.println("Enter the number:");
-        String number = scanner.nextLine();
-        this.contactBook.addContact(name, surname, number);
-    }
 
 }
