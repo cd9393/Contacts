@@ -12,7 +12,9 @@ public class ContactBook {
     }
 
     public void addContact(Contact contact) {
+
         this.contacts.add(contact);
+        System.out.println("The record was added");
     }
 
     public void removeContact(int choice) {

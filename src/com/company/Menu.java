@@ -37,8 +37,13 @@ public class Menu {
         } else {
             for (int i = 0; i < contacts.size(); i++) {
                 Contact contact = contacts.get(i);
-                String contactNumber = contact.hasNumber() ? contact.getPhoneNumber() : "[no number]";
-                System.out.println(i+1 + ". " + contact.getName() + " " + contact.getSurname() + ", " + contactNumber);
+                if (contact.isPerson) {
+                    Person person = (Person) contact;
+                    String contactNumber = contact.hasNumber() ? contact.getPhoneNumber() : "[no number]";
+                    System.out.println(i+1 + ". " + person.getName() + " " + person.getSurname() + ", " + contactNumber);
+                } else {
+
+                }
             }
         }
     }
@@ -60,16 +65,46 @@ public class Menu {
     }
 
     public void addContact() {
+        System.out.println("Enter the type (person, organization):");
+        String choice = scanner.nextLine();
+        if ("person".equals(choice)) {
+            addPerson();
+        } else if ("organization".equals(choice)) {
+            addOrganization();
+        } else {
+            System.out.println("Bad choice!");
+        }
+    }
+
+    public void addPerson() {
+        Person person = new Person();
         System.out.println("Enter the name:");
         String name = scanner.nextLine();
+        person.setName(name);
         System.out.println("Enter the surname:");
         String surname = scanner.nextLine();
+        person.setSurname(surname);
+        System.out.println("Enter the birth date:");
+        String birthDate = scanner.nextLine();
+        person.setBirthDate(birthDate);
+        System.out.println("Enter the gender (M, F):");
+        String gender = scanner.nextLine();
+        person.setGender(gender);
         System.out.println("Enter the number:");
         String number = scanner.nextLine();
-        Contact contact = new Contact(name, surname);
-        contact.setPhoneNumber(number);
-        contactBook.addContact(contact);
-        System.out.println("The record added.");
+        person.setPhoneNumber(number);
+        contactBook.addContact(person);
+    }
+
+    public void addOrganization() {
+        Organization organization = new Organization();
+        System.out.println("Enter the organization name:");
+        organization.setName(scanner.nextLine());
+        System.out.println("Enter the address:");
+        organization.setAddress(scanner.nextLine());
+        System.out.println("Enter the number:");
+        organization.setPhoneNumber(scanner.nextLine());
+        contactBook.addContact(organization);
     }
 
     public void editContact() {

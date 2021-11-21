@@ -1,43 +1,39 @@
 package com.company;
 
+import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Contact {
-    private String name;
-    private String surname;
-    private String phoneNumber;
+    protected String phoneNumber;
+    protected LocalDate createdAt;
+    protected LocalDate lastUpdated;
+    final boolean isPerson;
 
-    public Contact(String name, String surname, String phoneNumber) {
-        this.name = name;
-        this.surname = surname;
-        this.phoneNumber = phoneNumber;
-    }
-
-    public Contact(String name, String surname) {
-        this.name = name;
-        this.surname = surname;
+    public Contact(boolean isPerson) {
         this.phoneNumber = "[no number]";
+        this.createdAt = LocalDate.now();
+        this.lastUpdated = LocalDate.now();
+        this.isPerson = isPerson;
+
     }
 
-    public String getName() {
-        return name;
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDate getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public Contact() {
+        this.phoneNumber = "[no number]";
+        this.createdAt = LocalDate.now();
+        this.lastUpdated = LocalDate.now();
     }
 
     public boolean hasNumber() {
         return this.phoneNumber.isEmpty() ? false : true;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
     }
 
     public String getPhoneNumber() {
@@ -47,6 +43,7 @@ public class Contact {
     public void setPhoneNumber(String phoneNumber) {
         if (isValidNumber(phoneNumber)) {
             this.phoneNumber = phoneNumber;
+            setLastUpdated();
         } else {
             this.phoneNumber = "[no number]";
             System.out.println("Wrong number format!");
@@ -61,5 +58,9 @@ public class Contact {
         Matcher phoneMatcher = phonePattern.matcher(phoneNumber);
 
         return phoneMatcher.matches();
+    }
+
+    protected void setLastUpdated() {
+        this.lastUpdated = LocalDate.now();
     }
 }
