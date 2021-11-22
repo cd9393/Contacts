@@ -1,35 +1,30 @@
 package com.company;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Contact {
     protected String phoneNumber;
-    protected LocalDate createdAt;
-    protected LocalDate lastUpdated;
+    protected LocalDateTime createdAt;
+    protected LocalDateTime lastUpdated;
     final boolean isPerson;
 
     public Contact(boolean isPerson) {
         this.phoneNumber = "[no number]";
-        this.createdAt = LocalDate.now();
-        this.lastUpdated = LocalDate.now();
+        this.createdAt = LocalDateTime.now();
+        this.lastUpdated = LocalDateTime.now();
         this.isPerson = isPerson;
 
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public LocalDate getLastUpdated() {
+    public LocalDateTime getLastUpdated() {
         return lastUpdated;
-    }
-
-    public Contact() {
-        this.phoneNumber = "[no number]";
-        this.createdAt = LocalDate.now();
-        this.lastUpdated = LocalDate.now();
     }
 
     public boolean hasNumber() {
@@ -61,6 +56,6 @@ public class Contact {
     }
 
     protected void setLastUpdated() {
-        this.lastUpdated = LocalDate.now();
+        this.lastUpdated = LocalDateTime.now();
     }
 }

@@ -16,18 +16,50 @@ public class Menu {
     public void displayMenu() {
         boolean isRunning = true;
         while(isRunning) {
-            System.out.println("Enter action (add, remove, edit, count, list, exit):");
+            System.out.println("Enter action (add, remove, edit, count, info, exit):");
             String choice = this.scanner.nextLine();
             switch (choice) {
                 case "add" -> addContact();
                 case "remove" -> removeContact();
                 case "edit" -> editContact();
                 case "count" -> displayContactCount();
-                case "list" -> displayContacts();
+                case "info" -> displayInfo();
                 case "exit" -> isRunning = false;
                 default -> System.out.println("make a valid selection");
             }
+            System.out.println();
         }
+    }
+
+    public void displayInfo() {
+        displayContacts();
+        System.out.println("Select a record:");
+        int choice = Integer.parseInt(scanner.nextLine());
+        Contact contact = contactBook.getContacts().get(choice - 1);
+        if (contact.isPerson) {
+            displayPerson((Person) contact);
+        } else {
+            displayOrganization((Organization) contact);
+        }
+    }
+    public void displayPerson(Person person) {
+        String birthDate = person.getBirthDate() == null ? "[no data]" : person.getBirthDate().toString();
+        String gender = person.getGender() == null ? "[no data]" : person.getGender();
+        System.out.println("Name: " + person.getName());
+        System.out.println("Surname: " + person.getSurname());
+        System.out.println("Birth date: " + birthDate);
+        System.out.println("Gender: " + gender);
+        System.out.println("Number: " + person.getPhoneNumber());
+        System.out.println("Time created: " + person.getCreatedAt());
+        System.out.println("Time last edit: " + person.getLastUpdated());
+    }
+
+    public void displayOrganization(Organization organization) {
+        System.out.println("Organization name: " + organization.getName());
+        System.out.println("Address: " + organization.getAddress());
+        System.out.println("Number: " + organization.getPhoneNumber());
+        System.out.println("Time created: " + organization.getCreatedAt());
+        System.out.println("Time last edit: " + organization.getLastUpdated());
     }
 
     public void displayContacts() {
@@ -39,10 +71,10 @@ public class Menu {
                 Contact contact = contacts.get(i);
                 if (contact.isPerson) {
                     Person person = (Person) contact;
-                    String contactNumber = contact.hasNumber() ? contact.getPhoneNumber() : "[no number]";
-                    System.out.println(i+1 + ". " + person.getName() + " " + person.getSurname() + ", " + contactNumber);
+                    System.out.println(i+1 + ". " + person.getName() + " " + person.getSurname());
                 } else {
-
+                    Organization organization = (Organization) contact;
+                    System.out.println(i+1 + ". " + organization.getName());
                 }
             }
         }
@@ -55,7 +87,7 @@ public class Menu {
 
     public void removeContact() {
         if (contactBook.getContacts().isEmpty()) {
-            displayContacts();
+            System.out.println("No records to remove!");
         } else {
             displayContacts();
             System.out.println("Select a record:");
@@ -109,37 +141,82 @@ public class Menu {
 
     public void editContact() {
         if (contactBook.getContacts().isEmpty()) {
-            System.out.println("No records to remove!");
+            System.out.println("No records to edit!");
         } else {
             displayContacts();
             System.out.println("Select a record:");
             int choice = Integer.parseInt(scanner.nextLine());
             Contact contact = contactBook.getContacts().get(choice - 1);
-            System.out.println("Select a field (name, surname, number):");
-            String fieldName = scanner.nextLine();
-            switch (fieldName) {
-                case "name" -> {
-                    System.out.println("Enter name:");
-                    String name = scanner.nextLine();
-                    contact.setName(name);
-                    System.out.println("The record updated!");
-                }
-                case "surname" -> {
-                    System.out.println("Enter surname");
-                    String surname = scanner.nextLine();
-                    contact.setSurname(surname);
-                    System.out.println("The record updated!");
-                }
-                case "number" -> {
-                    System.out.println("Enter Number");
-                    String number = scanner.nextLine();
-                    contact.setPhoneNumber(number);
-                    System.out.println("The record updated!");
-                }
-                default -> System.out.println("Make a valid selection");
+            if (contact.isPerson) {
+                editPerson((Person) contact);
+            } else {
+                editOrganization((Organization) contact);
             }
         }
     }
 
+    public void editOrganization(Organization contact) {
+        System.out.println("Select a field (name, number, address):");
+        String fieldName = scanner.nextLine();
+        switch (fieldName) {
+            case "name" -> {
+                System.out.println("Enter name:");
+                String name = scanner.nextLine();
+                contact.setName(name);
+                System.out.println("The record updated!");
+            }
+            case "number" -> {
+                System.out.println("Enter Number");
+                String number = scanner.nextLine();
+                contact.setPhoneNumber(number);
+                System.out.println("The record updated!");
+            }
+            case "address" -> {
+                System.out.println("Enter address");
+                String address = scanner.nextLine();
+                contact.setAddress(address);
+                System.out.println("The record updated!");
+            }
+            default -> System.out.println("Make a valid selection");
+        }
+    }
+
+    public void editPerson(Person contact) {
+        System.out.println("Select a field (name, surname, birth, gender, number):");
+        String fieldName = scanner.nextLine();
+        switch (fieldName) {
+            case "name" -> {
+                System.out.println("Enter name:");
+                String name = scanner.nextLine();
+                contact.setName(name);
+                System.out.println("The record updated!");
+            }
+            case "surname" -> {
+                System.out.println("Enter surname");
+                String surname = scanner.nextLine();
+                contact.setSurname(surname);
+                System.out.println("The record updated!");
+            }
+            case "birth" -> {
+                System.out.println("Enter birth");
+                String birthdate = scanner.nextLine();
+                contact.setBirthDate(birthdate);
+                System.out.println("The record updated!");
+            }
+            case "gender" -> {
+                System.out.println("Enter gender");
+                String gender = scanner.nextLine();
+                contact.setGender(gender);
+                System.out.println("The record updated!");
+            }
+            case "number" -> {
+                System.out.println("Enter Number");
+                String number = scanner.nextLine();
+                contact.setPhoneNumber(number);
+                System.out.println("The record updated!");
+            }
+            default -> System.out.println("Make a valid selection");
+        }
+    }
 
 }
