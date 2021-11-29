@@ -16,7 +16,7 @@ public class Menu {
     public void displayMenu() {
         boolean isRunning = true;
         while(isRunning) {
-            System.out.println("Enter action (add, remove, edit, count, info, exit):");
+            System.out.println("[menu] Enter action (add, remove, edit, count, info, exit):");
             String choice = this.scanner.nextLine();
             switch (choice) {
                 case "add" -> addContact();
@@ -29,6 +29,11 @@ public class Menu {
             }
             System.out.println();
         }
+    }
+
+    public void search() {
+        System.out.println("Enter search query:");
+        String searchQuery = scanner.nextLine();
     }
 
     public void displayInfo() {

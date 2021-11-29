@@ -1,5 +1,6 @@
 package com.company;
 
+import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
@@ -56,6 +57,48 @@ public class Person extends Contact {
             this.gender = gender;
         }else {
             System.out.println("Bad Gender!");
+        }
+    }
+
+
+    @Override
+    public String getValueOfField(String fieldName) {
+        switch (fieldName) {
+            case "name":
+                return this.name;
+            case "surname":
+                return this.surname;
+            case "phoneNumber":
+                return this.getPhoneNumber();
+            case "gender":
+                return this.gender;
+            case "birthDate":
+                return this.birthDate.toString();
+            default:
+                return "Not a valid field";
+        }
+    }
+
+    @Override
+    public void setFieldByName(String fieldName, String newValue) {
+        switch (fieldName) {
+            case "name":
+                setName(newValue);
+                break;
+            case "surname":
+                setSurname(newValue);
+                break;
+            case "phoneNumber":
+                this.setPhoneNumber(newValue);
+                break;
+            case "gender":
+                this.setGender(newValue);
+                break;
+            case "birthDate":
+                this.setBirthDate(newValue);
+                break;
+            default:
+                break;
         }
     }
 }
